@@ -11,3 +11,19 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.cars {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.car {
+  border: 1px solid gray;
+  margin: 20px;
+  padding: 20px;
+  max-width: 300px;
+}
+
+.car img {
+  width: 100%;
+}
