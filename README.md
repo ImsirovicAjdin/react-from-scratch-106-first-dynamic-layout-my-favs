@@ -1,70 +1,199 @@
-# Getting Started with Create React App
+# About this React app
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+This project is [deployed on Netlify]().
 
-In the project directory, you can run:
+## Learning Concepts covered
 
-### `npm start`
+### Getting images from the web and passing them via props
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Commits:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+#### (0) Set-up the README and starter code
 
-### `npm test`
+#### (1) Get the image from a third-party website and use it in a component
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Here's my brand new `Car` component.
+```jsx
+function Car(props) {
 
-### `npm run build`
+    const carImgSrc = "https://www.codingexercises.com/img/2022-01-25/001-bmw-blue.jpg"
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+    return (
+      <div>
+        <img src={carImgSrc} alt="My favorite car" />
+        <p>One of my favorite cars is a {props.color} {props.make} from {props.year}.</p>
+      </div>
+    )
+  }
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+export default Car;
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+In `App`, I'm using props to make it truly dynamic.
+```jsx
+import Car from './Car';
+import './App.css';
 
-### `npm run eject`
+function App() {
+  return (
+    <Car make="BMW" color="blue" year="2020" />
+  );
+}
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+export default App;
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+#### (2) Remember passing data as props
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+I'm moving the image source data to the parent component. Remember "passing data as props"?
+```jsx
+function Car(props) {
+    return (
+      <div>
+        <img src={props.carImgSrc} alt="My favorite car" />
+        <p>One of my favorite cars is a {props.color} {props.make} from {props.year}.</p>
+      </div>
+    )
+  }
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+export default Car;
+```
 
-## Learn More
+Consequently, I'm updating the `App` component as well.
+```jsx
+import Car from './Car';
+import './App.css';
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+function App() {
+  return (
+    <Car
+        make="BMW"
+        color="blue"
+        year="2020"
+        carImgSrc="https://www.codingexercises.com/img/2022-01-25/001-bmw-blue.jpg"
+    />
+  );
+}
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+export default App;
+```
 
-### Code Splitting
+#### (3) Invoking multiple instances of the same child component inside a parent component
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+An example of using a variable as a prop value.
 
-### Analyzing the Bundle Size
+```jsx
+import Car from './Car';
+import './App.css';
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+function App() {
+  return (
+    <div>
+      <h1>My favorite cars</h1>
+      <Car
+        make="BMW"
+        color="blue"
+        year="2020"
+        carImgSrc="https://www.codingexercises.com/img/2022-01-25/001-bmw-blue.jpg" />
+      <Car
+        make="Mercedes"
+        color="gray"
+        year="2018"
+        carImgSrc="https://www.codingexercises.com/img/2022-01-25/002-mercedes-gray.jpg" />
+      <Car
+        make="Toyota"
+        color="gray"
+        year="new"
+        carImgSrc="https://www.codingexercises.com/img/2022-01-25/003-toyota-gray.jpg" />
+      <Car
+        make="Alfa Romeo"
+        color="red"
+        year="2012"
+        carImgSrc="https://www.codingexercises.com/img/2022-01-25/004-alpha-romeo-red.jpg" />
+    </div>
+  );
+}
 
-### Making a Progressive Web App
+export default App;
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+#### (4) Styling the app using flexbox
 
-### Advanced Configuration
+I'll update the `index.css` file with some custom styles, and use those classes as the `className` attribute in JSX in proper places.
+```css
+.cars {
+  display: flex;
+  flex-wrap: wrap;
+}
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+.car {
+  border: 1px solid gray;
+  margin: 20px;
+  padding: 20px;
+  max-width: 300px;
+}
 
-### Deployment
+.car img {
+  width: 100%;
+}
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+App.js:
+```jsx
+import Car from './Car';
+import './App.css';
 
-### `npm run build` fails to minify
+function App() {
+  return (
+    <div className="cars">
+      <h1>My favorite cars</h1>
+      <Car
+        make="BMW"
+        color="blue"
+        year="2020"
+        carImgSrc="https://www.codingexercises.com/img/2022-01-25/001-bmw-blue.jpg" />
+      <Car
+        make="Mercedes"
+        color="gray"
+        year="2018"
+        carImgSrc="https://www.codingexercises.com/img/2022-01-25/002-mercedes-gray.jpg" />
+      <Car
+        make="Toyota"
+        color="gray"
+        year="new"
+        carImgSrc="https://www.codingexercises.com/img/2022-01-25/003-toyota-gray.jpg" />
+      <Car
+        make="Alfa Romeo"
+        color="red"
+        year="2012"
+        carImgSrc="https://www.codingexercises.com/img/2022-01-25/004-alpha-romeo-red.jpg" />
+    </div>
+  );
+}
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+export default App;
+```
+
+Car.js:
+```jsx
+function Car(props) {
+    return (
+      <div className="car">
+        <img src={props.carImgSrc} alt="My favorite car" />
+        <p>One of my favorite cars is a {props.color} {props.make} from {props.year}.</p>
+      </div>
+    )
+  }
+
+export default Car;
+```
+
+#### (5) Question: What would we do if we had 100 cars?
+
+Would we have to add 100 JSX Car elements in App.js?
+
+### Tasks
+
+1. Think about the Question in point 5.
