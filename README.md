@@ -10,7 +10,7 @@ This project is [deployed on Netlify]().
 
 Commits:
 
-#### (0) Set-up the README and starter code
+#### (0) Set up the README and the starter code
 
 #### (1) Get the image from a third-party website and use it in a component
 
